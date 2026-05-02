@@ -1,29 +1,36 @@
-import { Building2, Calendar, User, MapPin } from "lucide-react";
+'use client';
 
-const companyInfo = [
-  {
-    icon: Building2,
-    label: "会社名",
-    value: "ProPlant合同会社",
-  },
-  {
-    icon: Calendar,
-    label: "設立",
-    value: "2020年",
-  },
-  {
-    icon: User,
-    label: "代表",
-    value: "福田翔太",
-  },
-  {
-    icon: MapPin,
-    label: "所在地",
-    value: "神奈川県横浜市西区北幸2丁目10-28",
-  },
-];
+import { Building2, Calendar, User, MapPin } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
+import { translations } from "@/lib/translations";
 
 export function AboutSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const companyInfo = [
+    {
+      icon: Building2,
+      label: t.companyLabel,
+      value: t.companyValue,
+    },
+    {
+      icon: Calendar,
+      label: t.foundedLabel,
+      value: t.foundedValue,
+    },
+    {
+      icon: User,
+      label: t.presidentLabel,
+      value: t.presidentValue,
+    },
+    {
+      icon: MapPin,
+      label: t.locationLabel,
+      value: t.locationValue,
+    },
+  ];
+
   return (
     <section id="about" className="py-24 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,15 +41,13 @@ export function AboutSection() {
               Company
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-6 text-balance">
-              会社概要
+              {t.aboutHeading}
             </h2>
             <p className="text-neutral-600 text-lg leading-relaxed mb-8">
-              ProPlant合同会社は、「一人ひとりのタレントを開花させ、育てることで社会を明るく」という理念のもと、
-              マーケティング支援、展示会運営サポート、タレントマネジメントの3つの事業を展開しています。
+              {t.aboutDescription1}
             </p>
             <p className="text-neutral-600 text-lg leading-relaxed">
-              私たちは、お客様一人ひとりの可能性を信じ、
-              その才能が最大限に発揮されるよう、全力でサポートいたします。
+              {t.aboutDescription2}
             </p>
           </div>
 

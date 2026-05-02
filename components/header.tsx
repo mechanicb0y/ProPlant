@@ -2,19 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, ArrowLeft } from "lucide-react";
+import { Menu, X, ArrowLeft, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/contexts/language-context";
+import { translations } from "@/lib/translations";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const { language, setLanguage } = useLanguage();
+  const t = translations[language];
 
   const navItems = [
-    { label: "事業内容", href: "#services" },
-    { label: "会社概要", href: "#about" },
-    { label: "お問い合わせ", href: "#contact" },
+    { label: t.servicesLabel, href: "#services" },
+    { label: t.aboutLabel, href: "#about" },
+    { label: t.contactLabel, href: "#contact" },
+  ];
+
+  const languages = [
+    { code: 'ja' as const, label: t.japanese },
+    { code: 'en' as const, label: t.english },
+    { code: 'ar' as const, label: t.arabic },
+    { code: 'fr' as const, label: t.french },
   ];
 
   return (
@@ -26,7 +43,7 @@ export function Header() {
               <Link
                 href="/"
                 className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
-                aria-label="ホームに戻る"
+                aria-label={t.homeLabel}
               >
                 <ArrowLeft className="w-5 h-5 text-neutral-900" />
               </Link>
@@ -51,22 +68,64 @@ export function Header() {
               </Link>
             ))}
             <Button asChild className="bg-black hover:bg-neutral-800 text-white">
-              <Link href="#contact">お問い合わせ</Link>
+              <Link href="#contact">{t.contactLabel}</Link>
             </Button>
+
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-neutral-600 hover:text-neutral-900">
+                  <Globe className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {languages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={language === lang.code ? 'bg-neutral-100' : ''}
+                  >
+                    {lang.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="メニューを開く"
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-neutral-900" />
-            ) : (
-              <Menu className="w-6 h-6 text-neutral-900" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            {/* Mobile Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-neutral-600 hover:text-neutral-900">
+                  <Globe className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {languages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={language === lang.code ? 'bg-neutral-100' : ''}
+                  >
+                    {lang.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <button
+              className="p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? t.menuClose : t.menuOpen}
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-neutral-900" />
+              ) : (
+                <Menu className="w-6 h-6 text-neutral-900" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -85,7 +144,7 @@ export function Header() {
               ))}
               <Button asChild className="bg-black hover:bg-neutral-800 text-white w-full">
                 <Link href="#contact" onClick={() => setIsMenuOpen(false)}>
-                  お問い合わせ
+                  {t.contactLabel}
                 </Link>
               </Button>
             </div>

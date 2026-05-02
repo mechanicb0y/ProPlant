@@ -1,6 +1,15 @@
+'use client';
+
 import Link from "next/link";
+import { useLanguage } from "@/contexts/language-context";
+import { translations } from "@/lib/translations";
 
 export default function Footer() {
+  const { language } = useLanguage();
+  const t = translations[language];
+  const year = new Date().getFullYear();
+  const copyright = t.copyright.replace('{year}', year.toString());
+
   return (
     <footer className="bg-neutral-900 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,22 +23,20 @@ export default function Footer() {
               <span className="font-semibold text-lg text-white">ProPlant</span>
             </Link>
             <p className="text-neutral-400 text-sm leading-relaxed">
-              一人ひとりのタレントを開花させ、
-              <br />
-              育てることで社会を明るく。
+              {t.footerDescription}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="font-semibold text-white mb-4">ナビゲーション</h3>
+            <h3 className="font-semibold text-white mb-4">{t.navigationLabel}</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="#services"
                   className="text-neutral-400 hover:text-white transition-colors text-sm"
                 >
-                  事業内容
+                  {t.servicesLabel}
                 </Link>
               </li>
               <li>
@@ -37,7 +44,7 @@ export default function Footer() {
                   href="#about"
                   className="text-neutral-400 hover:text-white transition-colors text-sm"
                 >
-                  会社概要
+                  {t.aboutLabel}
                 </Link>
               </li>
               <li>
@@ -45,7 +52,7 @@ export default function Footer() {
                   href="#contact"
                   className="text-neutral-400 hover:text-white transition-colors text-sm"
                 >
-                  お問い合わせ
+                  {t.contactLabel}
                 </Link>
               </li>
             </ul>
@@ -53,9 +60,9 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-semibold text-white mb-4">お問い合わせ</h3>
+            <h3 className="font-semibold text-white mb-4">{t.contactInfoLabel}</h3>
             <address className="not-italic text-neutral-400 text-sm space-y-2">
-              <p>神奈川県横浜市西区北幸2丁目10-28</p>
+              <p>{t.locationValue}</p>
               <p>info@proplant.co.jp</p>
             </address>
           </div>
@@ -63,7 +70,7 @@ export default function Footer() {
 
         <div className="border-t border-neutral-700 mt-12 pt-8">
           <p className="text-center text-neutral-500 text-sm">
-            © 2020-{new Date().getFullYear()} ProPlant合同会社 All rights reserved.
+            {copyright}
           </p>
         </div>
       </div>

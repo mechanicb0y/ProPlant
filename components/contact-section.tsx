@@ -5,8 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Mail, Phone, MapPin } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
+import { translations } from "@/lib/translations";
 
 export function ContactSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -46,11 +51,10 @@ export function ContactSection() {
             Contact
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-6 text-balance">
-            お問い合わせ
+            {t.contactHeading}
           </h2>
           <p className="text-neutral-600 text-lg max-w-2xl mx-auto leading-relaxed">
-            ご質問やご相談がございましたら、お気軽にお問い合わせください。
-            担当者より折り返しご連絡いたします。
+            {t.contactDescription}
           </p>
         </div>
 
@@ -62,7 +66,7 @@ export function ContactSection() {
                 <Mail className="w-6 h-6 text-neutral-900" />
               </div>
               <div>
-                <p className="font-medium text-neutral-900 mb-1">メール</p>
+                <p className="font-medium text-neutral-900 mb-1">{t.emailLabel}</p>
                 <p className="text-neutral-600">info@proplant.co.jp</p>
               </div>
             </div>
@@ -72,7 +76,7 @@ export function ContactSection() {
                 <Phone className="w-6 h-6 text-neutral-900" />
               </div>
               <div>
-                <p className="font-medium text-neutral-900 mb-1">電話番号</p>
+                <p className="font-medium text-neutral-900 mb-1">{t.phoneLabel}</p>
                 <p className="text-neutral-600">045-XXX-XXXX</p>
               </div>
             </div>
@@ -82,9 +86,9 @@ export function ContactSection() {
                 <MapPin className="w-6 h-6 text-neutral-900" />
               </div>
               <div>
-                <p className="font-medium text-neutral-900 mb-1">所在地</p>
+                <p className="font-medium text-neutral-900 mb-1">{t.locationLabel}</p>
                 <p className="text-neutral-600">
-                  神奈川県横浜市西区北幸2丁目10-28
+                  {t.locationValue}
                 </p>
               </div>
             </div>
@@ -98,17 +102,17 @@ export function ContactSection() {
                   <Send className="w-8 h-8 text-neutral-900" />
                 </div>
                 <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                  お問い合わせありがとうございます
+                  {t.thanksMessage}
                 </h3>
                 <p className="text-neutral-600">
-                  内容を確認の上、担当者より折り返しご連絡いたします。
+                  {t.confirmMessage}
                 </p>
                 <Button
                   onClick={() => setIsSubmitted(false)}
                   variant="outline"
                   className="mt-6 border-neutral-300 text-neutral-900 hover:bg-neutral-100"
                 >
-                  新しいお問い合わせ
+                  {t.newContactButton}
                 </Button>
               </div>
             ) : (
@@ -119,7 +123,7 @@ export function ContactSection() {
                       htmlFor="name"
                       className="text-sm font-medium text-neutral-900"
                     >
-                      お名前 <span className="text-neutral-900">*</span>
+                      {t.nameLabel} <span className="text-neutral-900">{t.required}</span>
                     </label>
                     <Input
                       id="name"
@@ -127,7 +131,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="山田 太郎"
+                      placeholder={t.namePlaceholder}
                       className="bg-white border-neutral-300 text-neutral-900 placeholder:text-neutral-400"
                     />
                   </div>
@@ -136,7 +140,7 @@ export function ContactSection() {
                       htmlFor="email"
                       className="text-sm font-medium text-neutral-900"
                     >
-                      メールアドレス <span className="text-neutral-900">*</span>
+                      {t.emailAddressLabel} <span className="text-neutral-900">{t.required}</span>
                     </label>
                     <Input
                       id="email"
@@ -156,14 +160,14 @@ export function ContactSection() {
                     htmlFor="company"
                     className="text-sm font-medium text-neutral-900"
                   >
-                    会社名
+                    {t.companyNameLabel}
                   </label>
                   <Input
                     id="company"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    placeholder="株式会社〇〇"
+                    placeholder={t.companyPlaceholder}
                     className="bg-white border-neutral-300 text-neutral-900 placeholder:text-neutral-400"
                   />
                 </div>
@@ -173,7 +177,7 @@ export function ContactSection() {
                     htmlFor="message"
                     className="text-sm font-medium text-neutral-900"
                   >
-                    お問い合わせ内容 <span className="text-neutral-900">*</span>
+                    {t.messageLabel} <span className="text-neutral-900">{t.required}</span>
                   </label>
                   <Textarea
                     id="message"
@@ -182,7 +186,7 @@ export function ContactSection() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    placeholder="お問い合わせ内容をご記入ください"
+                    placeholder={t.messagePlaceholder}
                     className="bg-white border-neutral-300 text-neutral-900 placeholder:text-neutral-400 resize-none"
                   />
                 </div>
@@ -193,10 +197,10 @@ export function ContactSection() {
                   className="w-full sm:w-auto bg-black hover:bg-neutral-800 text-white px-8 py-6 text-base transition-colors"
                 >
                   {isSubmitting ? (
-                    "送信中..."
+                    t.sending
                   ) : (
                     <>
-                      送信する
+                      {t.sendButton}
                       <Send className="ml-2 w-5 h-5" />
                     </>
                   )}

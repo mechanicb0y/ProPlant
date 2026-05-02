@@ -1,8 +1,15 @@
+'use client';
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
+import { translations } from "@/lib/translations";
 
 export function HeroSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Background Pattern - subtle gray tones */}
@@ -14,18 +21,13 @@ export function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <div className="max-w-4xl mx-auto">
           <p className="text-neutral-600 font-medium tracking-widest uppercase mb-6 text-sm">
-            ProPlant合同会社
+            {t.companyName}
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight mb-8 text-balance">
-            一人ひとりの
-            <span className="text-neutral-900">タレント</span>
-            を開花させ、
-            <br className="hidden sm:block" />
-            育てることで社会を明るく
+            {t.heroTitle}
           </h1>
           <p className="text-lg sm:text-xl text-neutral-600 mb-12 max-w-2xl mx-auto leading-relaxed text-pretty">
-            マーケティング支援から展示会運営、タレントマネジメントまで。
-            私たちは、あなたのビジネスと才能の成長を全力でサポートします。
+            {t.heroDescription}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -34,7 +36,7 @@ export function HeroSection() {
               className="bg-black hover:bg-neutral-800 text-white px-8 py-6 text-base transition-colors"
             >
               <Link href="#services">
-                事業内容を見る
+                {t.viewServices}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
@@ -44,7 +46,7 @@ export function HeroSection() {
               size="lg"
               className="border-neutral-300 text-neutral-900 hover:bg-neutral-50 px-8 py-6 text-base transition-colors"
             >
-              <Link href="#contact">お問い合わせ</Link>
+              <Link href="#contact">{t.contactLabel}</Link>
             </Button>
           </div>
         </div>
