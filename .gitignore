@@ -15,3 +15,8 @@ node_modules
 .next/
 .DS_Store
 .vercel
+
+# Windows folder files
+desktop.ini
+folderico-*.ico
+Thumbs.db
