@@ -1,7 +1,5 @@
 <div align="center">
 
-# 🌱 ProPlant
-
 **Corporate website for ProPlant LLC (ProPlant合同会社)**: a Yokohama-based company that helps businesses and individual talents grow through marketing support, exhibition management, and talent management.
 
 *"Bloom and nurture individual talents to brighten society."*
